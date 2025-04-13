@@ -1,7 +1,7 @@
 # DevJobs – Job Platform using Hexagonal Architecture + Rich DDD
 
 [![Java](https://img.shields.io/badge/Java-17-blue)](https://www.oracle.com/java/)
-[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2-brightgreen)](https://spring.io/projects/spring-boot)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-brightgreen)](https://spring.io/projects/spring-boot)
 [![Architecture](https://img.shields.io/badge/Architecture-Hexagonal%20%7C%20Rich%20DDD-orange)](#)
 [![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)](#)
 
@@ -46,7 +46,7 @@ curl -X POST "http://localhost:8080/vagas?titulo=Dev%20Java&descricao=Vaga%20Spr
 
 ---
 
-## 📚 Next Steps
+## 🔭 Next Steps
 
 - [ ] Swagger/OpenAPI documentation
 - [ ] DTO layer + validation
@@ -54,6 +54,15 @@ curl -X POST "http://localhost:8080/vagas?titulo=Dev%20Java&descricao=Vaga%20Spr
 - [ ] Integration with a real database (JPA/PostgreSQL)
 - [ ] GraphQL as an additional adapter
 - [ ] AI module for smart suggestions
+
+---
+
+## 📚 Documentation
+
+Looking for more details about the architecture, technical decisions, or MVP planning?
+
+👉 Check out the [Project Wiki](../../wiki) for a full breakdown.
+
 
 ---
 
