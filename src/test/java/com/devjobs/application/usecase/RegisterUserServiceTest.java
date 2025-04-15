@@ -1,5 +1,6 @@
 package com.devjobs.application.usecase;
 
+import com.devjobs.domain.model.Role;
 import com.devjobs.domain.model.User;
 import com.devjobs.domain.ports.output.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,8 @@ class RegisterUserServiceTest {
         UserRepository mockRepo = mock(UserRepository.class);
         RegisterUserService service = new RegisterUserService(mockRepo);
 
-        User inputUser = new User(null, "Zuma", "zuma@email.com", "password123", "CANDIDATE");
-        User savedUser = new User(UUID.randomUUID(), "Zuma", "zuma@email.com", "password123", "CANDIDATE");
+        User inputUser = new User("Zuma", "zuma@email.com", "password123", Role.CANDIDATE);
+        User savedUser = new User(inputUser.getId(), "Zuma", "zuma@email.com", "password123", Role.CANDIDATE);
 
         when(mockRepo.save(inputUser)).thenReturn(savedUser);
 
