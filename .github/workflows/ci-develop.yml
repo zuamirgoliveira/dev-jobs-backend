@@ -20,7 +20,7 @@ jobs:
           java-version: 17
 
       - name: Build and Analyze with SonarQube
-        run: mvn clean verify -DskipTests
+        run: mvn clean verify sonar:sonar -DskipTests
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
