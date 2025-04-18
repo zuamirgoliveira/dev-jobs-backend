@@ -3,7 +3,7 @@
 [![Java](https://img.shields.io/badge/Java-17-blue)](https://www.oracle.com/java/)
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.4.5-brightgreen)](https://spring.io/projects/spring-boot)
 [![Architecture](https://img.shields.io/badge/Architecture-Hexagonal%20%7C%20Rich%20DDD-orange)](#)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=dev-jobs-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dev-jobs-backend)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=zuamirgoliveira_dev-jobs-backend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=zuamirgoliveira_dev-jobs-backend)
 [![Status](https://img.shields.io/badge/Status-In%20Progress-yellow)](#)
 
 ---
