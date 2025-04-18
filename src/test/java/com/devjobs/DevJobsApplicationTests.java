@@ -3,6 +3,8 @@ package com.devjobs;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 @SpringBootTest
 class DevJobsApplicationTests {
 
@@ -13,6 +15,6 @@ class DevJobsApplicationTests {
 
     @Test
     void mainRunsWithoutErrors() {
-        DevJobsApplication.main(new String[]{});
+        assertDoesNotThrow(() -> DevJobsApplication.main(new String[]{}));
     }
 }
