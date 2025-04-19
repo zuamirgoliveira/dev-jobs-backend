@@ -11,8 +11,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.UUID;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -64,5 +67,33 @@ class RegisterUserControllerTest {
                             }
                         """))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("Should return user data when user exists")
+    void getUserById_Success() throws Exception {
+        User user = new User("Zuma", "zuma@gmail.com", "123Senha", Role.CANDIDATE);
+        String userId = user.getId().toString();
+
+        when(registerUserService.findUserById(any(UUID.class)).thenReturn(user);
+
+        mockMvc.perform(get("/api/v1/users/" + userId))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(userId))
+                .andExpect(jsonPath("$.name").value("Zuma"))
+                .andExpect(jsonPath("$.email").value("zuma@gmail.com"))
+                .andExpect(jsonPath("$.role").value("CANDIDATE"));
+    }
+
+    @Test
+    @DisplayName("Should return 404 when user does not exist")
+    void getUserById_NotFound() throws Exception {
+        UUID userId = UUID.randomUUID();
+
+        when(registerUserService.findUserById(userId))
+                .thenThrow(new UserNotFoundException("User with ID " + userId + " not found"));
+
+        mockMvc.perform(get("/api/v1/users/" + userId))
+                .andExpect(status().isNotFound());
     }
 }
