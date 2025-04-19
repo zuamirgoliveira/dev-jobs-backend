@@ -1,7 +1,10 @@
 package com.devjobs.domain.ports.output;
 
 import com.devjobs.domain.model.User;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UserRepository {
-    User save(User user);
+import java.util.UUID;
+
+public interface UserRepository extends JpaRepository<User, UUID> {
+
 }
