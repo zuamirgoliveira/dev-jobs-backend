@@ -1,6 +1,5 @@
 package com.devjobs.adapters.in.rest.controller;
 
-import com.devjobs.adapters.in.rest.dto.RegisterUserRequest;
 import com.devjobs.application.usecase.RegisterUserService;
 import com.devjobs.domain.model.Role;
 import com.devjobs.domain.model.User;
@@ -12,12 +11,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.UUID;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(RegisterUserController.class)
 class RegisterUserControllerTest {
