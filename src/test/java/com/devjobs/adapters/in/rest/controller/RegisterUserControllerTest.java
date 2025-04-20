@@ -98,4 +98,5 @@ class RegisterUserControllerTest {
         mockMvc.perform(get("/api/v1/users/" + userId))
                 .andExpect(status().isNotFound());
     }
+
 }
