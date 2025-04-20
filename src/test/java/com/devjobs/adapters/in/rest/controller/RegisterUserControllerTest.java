@@ -1,6 +1,7 @@
 package com.devjobs.adapters.in.rest.controller;
 
 import com.devjobs.application.usecase.RegisterUserService;
+import com.devjobs.domain.exception.UserNotFoundException;
 import com.devjobs.domain.model.Role;
 import com.devjobs.domain.model.User;
 import org.junit.jupiter.api.DisplayName;
@@ -75,7 +76,7 @@ class RegisterUserControllerTest {
         User user = new User("Zuma", "zuma@gmail.com", "123Senha", Role.CANDIDATE);
         String userId = user.getId().toString();
 
-        when(registerUserService.findUserById(any(UUID.class)).thenReturn(user);
+        when(registerUserService.findUserById(any(UUID.class))).thenReturn(user);
 
         mockMvc.perform(get("/api/v1/users/" + userId))
                 .andExpect(status().isOk())
@@ -92,6 +93,7 @@ class RegisterUserControllerTest {
 
         when(registerUserService.findUserById(userId))
                 .thenThrow(new UserNotFoundException("User with ID " + userId + " not found"));
+
 
         mockMvc.perform(get("/api/v1/users/" + userId))
                 .andExpect(status().isNotFound());
