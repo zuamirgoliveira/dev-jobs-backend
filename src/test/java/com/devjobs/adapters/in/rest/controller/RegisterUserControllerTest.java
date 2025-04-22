@@ -15,11 +15,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(RegisterUserController.class)
 class RegisterUserControllerTest {
@@ -97,6 +95,42 @@ class RegisterUserControllerTest {
 
         mockMvc.perform(get("/api/v1/users/" + userId))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Should delete user successfully and return 204 No Content")
+    void deleteUserById_Success() throws Exception {
+        UUID userId = UUID.randomUUID();
+
+        doNothing().when(registerUserService).deleteUser(userId);
+
+        mockMvc.perform(delete("/api/v1/users/" + userId))
+                .andExpect(status().isNoContent());
+    }
+
+    @Test
+    @DisplayName("Should return 404 when trying to delete a non-existing user")
+    void deleteUserById_NotFound() throws Exception {
+        UUID userId = UUID.randomUUID();
+
+        doThrow(new UserNotFoundException("User with ID " + userId + " not found"))
+                .when(registerUserService).deleteUser(userId);
+
+        mockMvc.perform(delete("/api/v1/users/" + userId))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("Should return 500 Internal Server Error when unexpected exception occurs")
+    void unexpectedException_ShouldReturnInternalServerError() throws Exception {
+        UUID userId = UUID.randomUUID();
+
+        doThrow(new RuntimeException("Unexpected error"))
+                .when(registerUserService).findUserById(userId);
+
+        mockMvc.perform(get("/api/v1/users/" + userId))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().string(org.hamcrest.Matchers.containsString("Unexpected error")));
     }
 
 }
