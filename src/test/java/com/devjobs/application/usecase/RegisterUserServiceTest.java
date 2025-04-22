@@ -66,4 +66,33 @@ class RegisterUserServiceTest {
 
         verify(userRepository, times(1)).findById(userId);
     }
+
+    @Test
+    @DisplayName("Should delete user when user exists")
+    void deleteUser_ShouldDelete_WhenUserExists() {
+        User user = new User("Zuma", "zuma@gmail.com", "123Senha", Role.CANDIDATE);
+        UUID userId = user.getId();
+
+        when(userRepository.findById(userId)).thenReturn(Optional.of(user));
+        doNothing().when(userRepository).deleteById(userId);
+
+        registerUserService.deleteUser(userId);
+
+        verify(userRepository, times(1)).findById(userId);
+        verify(userRepository, times(1)).deleteById(userId);
+    }
+
+    @Test
+    @DisplayName("Should throw UserNotFoundException when deleting non-existing user")
+    void deleteUser_ShouldThrowException_WhenUserDoesNotExist() {
+        UUID userId = UUID.randomUUID();
+        when(userRepository.findById(userId)).thenReturn(Optional.empty());
+
+        assertThatThrownBy(() -> registerUserService.deleteUser(userId))
+                .isInstanceOf(UserNotFoundException.class)
+                .hasMessageContaining("User with ID " + userId + " not found");
+
+        verify(userRepository, times(1)).findById(userId);
+        verify(userRepository, never()).deleteById(any());
+    }
 }
