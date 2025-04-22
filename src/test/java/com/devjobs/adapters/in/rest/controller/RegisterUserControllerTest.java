@@ -65,7 +65,11 @@ class RegisterUserControllerTest {
                                 "role": null
                             }
                         """))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.status").value(400))
+                .andExpect(jsonPath("$.error").value("Bad Request"))
+                .andExpect(jsonPath("$.message").exists())
+                .andExpect(jsonPath("$.path").value("/api/v1/users"));
     }
 
     @Test
@@ -94,7 +98,11 @@ class RegisterUserControllerTest {
 
 
         mockMvc.perform(get("/api/v1/users/" + userId))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.error").value("Not Found"))
+                .andExpect(jsonPath("$.message").value("User with ID " + userId + " not found"))
+                .andExpect(jsonPath("$.path").value("/api/v1/users/" + userId));
     }
 
     @Test
@@ -117,7 +125,11 @@ class RegisterUserControllerTest {
                 .when(registerUserService).deleteUser(userId);
 
         mockMvc.perform(delete("/api/v1/users/" + userId))
-                .andExpect(status().isNotFound());
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.status").value(404))
+                .andExpect(jsonPath("$.error").value("Not Found"))
+                .andExpect(jsonPath("$.message").value("User with ID " + userId + " not found"))
+                .andExpect(jsonPath("$.path").value("/api/v1/users/" + userId));
     }
 
     @Test
@@ -130,7 +142,10 @@ class RegisterUserControllerTest {
 
         mockMvc.perform(get("/api/v1/users/" + userId))
                 .andExpect(status().isInternalServerError())
-                .andExpect(content().string(org.hamcrest.Matchers.containsString("Unexpected error")));
+                .andExpect(jsonPath("$.status").value(500))
+                .andExpect(jsonPath("$.error").value("Internal Server Error"))
+                .andExpect(jsonPath("$.message").value(org.hamcrest.Matchers.containsString("Unexpected error")))
+                .andExpect(jsonPath("$.path").value("/api/v1/users/" + userId));
     }
 
 }
