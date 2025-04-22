@@ -24,4 +24,10 @@ public class RegisterUserService {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException("User with ID " + id + " not found"));
     }
+
+    public void deleteUser(UUID id) {
+        userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException("User with ID " + id + " not found"));
+        userRepository.deleteById(id);
+    }
 }

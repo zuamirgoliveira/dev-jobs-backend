@@ -45,4 +45,10 @@ public class RegisterUserController {
         );
         return ResponseEntity.ok(response);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUserById(@PathVariable UUID id) {
+        registerUserService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }
