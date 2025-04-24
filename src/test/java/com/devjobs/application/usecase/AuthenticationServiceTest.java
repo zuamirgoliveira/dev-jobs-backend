@@ -44,7 +44,11 @@ class AuthenticationServiceTest {
         User user = new User("Zuma", "zuma@email.com", "123Senha", Role.CANDIDATE);
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
+        String email = user.getEmail();
+
         assertThrows(IllegalArgumentException.class, () ->
-                authenticationService.authenticate(user.getEmail(), "wrongPassword"));
+                authenticationService.authenticate(email, "wrongPassword")
+        );
     }
+
 }
